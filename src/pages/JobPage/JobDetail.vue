@@ -14,6 +14,20 @@
           </n-form-item>
         </n-gi>
         <n-gi>
+          <n-form-item path="key" :label="t('job.key')">
+            <n-input
+              :disabled="isReadonly"
+              :placeholder="'Job key'"
+              v-model:value="model.key"
+              maxlength="128"
+              show-count
+              @keydown.enter.prevent
+            />
+          </n-form-item>
+        </n-gi>
+      </n-grid>
+      <n-grid :cols="1" :x-gap="12">
+        <n-gi>
           <n-form-item path="description" :label="t('job.description')">
             <n-input
               :disabled="isReadonly"

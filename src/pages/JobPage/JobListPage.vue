@@ -24,6 +24,15 @@
                   :options="appList"
                 />
               </n-form-item>
+              <n-form-item :label="t('job.key')" path="param.key">
+                <n-input
+                  v-model:value="param.key"
+                  :placeholder="t('job.key')"
+                  clearable
+                  @keydown.enter.prevent
+                  @keyup.enter="queryList"
+                />
+              </n-form-item>
               <div class="paramWrap">
                 <n-form-item
                   :label="t('job.description')"
@@ -134,7 +143,8 @@ const webResources = useWebResources();
 const param = ref({
   description: '',
   handleName: '',
-  appName: ''
+  appName: '',
+  key: ''
 });
 
 const defaultModel = {
@@ -142,6 +152,7 @@ const defaultModel = {
   appName: '',
   enable: true,
   namespace: '',
+  key: '',
   description: '',
   scheduleType: '',
   cronValue: '',
@@ -207,6 +218,7 @@ const queryPage = function (pageNo) {
     appName: param.value.appName,
     likeDescription: param.value.description,
     likeHandleName: param.value.handleName,
+    likeKey: param.value.key,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -372,6 +384,7 @@ const submitForm = function () {
       modelRef.value.namespace || namespaceStore.current.value.namespaceId,
     enable: modelRef.value.enable,
     appName: modelRef.value.appName,
+    key: modelRef.value.key,
     description: modelRef.value.description,
     scheduleType: modelRef.value.scheduleType,
     cronValue: modelRef.value.cronValue,

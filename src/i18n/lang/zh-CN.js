@@ -175,6 +175,7 @@ const message = {
   job: {
     _name: '任务',
     id: '任务ID',
+    key: '任务唯一键',
     appName: '应用名称',
     description: '任务描述',
     scheduleType: '调度类型',
@@ -248,7 +249,8 @@ const message = {
     NO_PERMISSION: '没有权限',
     NO_APP_PERMISSION: '没有应用权限',
     NO_NAMESPACE_PERMISSION: '没有命名空间权限',
-    SYSTEM_ERROR: '系统异常'
+    SYSTEM_ERROR: '系统异常',
+    JOB_KEY_DUPLICATE: '任务唯一键重复，相同应用下任务唯一键不允许重复'
   }
 };
 export default {

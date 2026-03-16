@@ -40,6 +40,11 @@ export const createColumns = function ({
       key: 'id'
     },
     {
+      title: t('job.key'),
+      key: 'key',
+      width: 200
+    },
+    {
       title: t('job.description'),
       key: 'description'
     },

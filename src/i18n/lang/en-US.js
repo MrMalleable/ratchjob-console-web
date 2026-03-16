@@ -177,6 +177,7 @@ const message = {
   job: {
     _name: 'Job',
     id: 'JobID',
+    key: 'unique key',
     appName: 'app name',
     description: 'job description',
     scheduleType: 'schedule type',
@@ -252,7 +253,9 @@ const message = {
     NO_PERMISSION: 'NO_PERMISSION',
     NO_APP_PERMISSION: 'NO_APP_PERMISSION',
     NO_NAMESPACE_PERMISSION: 'NO_NAMESPACE_PERMISSION',
-    SYSTEM_ERROR: 'SYSTEM_ERROR'
+    SYSTEM_ERROR: 'SYSTEM_ERROR',
+    JOB_KEY_DUPLICATE:
+      'Job key duplicate, job key must be unique under the same application'
   }
 };
 export default {

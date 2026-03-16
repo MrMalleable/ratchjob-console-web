@@ -9,6 +9,7 @@ export interface IJobInfoParam {
   enable?: boolean;
   namespace?: string;
   appName?: string;
+  key?: string;
   description?: string;
   scheduleType?: string;
   cronValue?: string;
@@ -39,6 +40,7 @@ export interface IJobInfo {
   enable: boolean;
   appName: string;
   namespace: string;
+  key: string;
   description: string;
   scheduleType: string; // Assuming ScheduleType is a string for simplicity
   cronValue: string;
@@ -63,6 +65,7 @@ export interface IJobPageParam {
   appName?: string;
   likeDescription?: string;
   likeHandleName?: string;
+  likeKey?: string;
   pageNo: number;
   pageSize: number;
 }
