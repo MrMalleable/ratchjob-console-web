@@ -77,6 +77,7 @@
             <n-input-number
               :disabled="isReadonly"
               v-model:value="model.delaySecond"
+              style="width: 100%"
               @keydown.enter.prevent
             />
           </n-form-item>
@@ -89,6 +90,7 @@
               :disabled="isReadonly"
               v-model:value="model.intervalSecond"
               style="width: 100%"
+              @keydown.enter.prevent
             />
           </n-form-item>
         </n-gi>

@@ -12,13 +12,11 @@ export const ScheduleTypeOptions = [
   {
     value: 'INTERVAL',
     label: t('job.types.scheduleType.interval')
-  }
-  /*
+  },
   {
     value: 'DELAY',
-    label: t('job.types.scheduleType.delay'),
-  },
-   */
+    label: t('job.types.scheduleType.delay')
+  }
 ];
 
 export const JobRunModeOptions = [
