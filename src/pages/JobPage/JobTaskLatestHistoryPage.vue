@@ -12,7 +12,19 @@
       <div class="form-container">
         <div class="query-params">
           <n-form label-placement="left" label-width="auto">
-            <div class="paramWrap"></div>
+            <div class="paramWrap">
+              <n-form-item
+                class="app-name"
+                :label="t('job.appName')"
+                path="param.appName"
+              >
+                <n-select
+                  class="app-name"
+                  v-model:value="param.appName"
+                  :options="appList"
+                />
+              </n-form-item>
+            </div>
           </n-form>
           <div class="queryButton">
             <span class="query-button-item">
@@ -68,6 +80,7 @@ import { useI18n } from 'vue-i18n';
 import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { namespaceStore } from '@/data/namespace';
 import { jobApi } from '@/api/job';
+import { appApi } from '@/api/app';
 import {
   handleApiResult,
   printApiSuccess,
@@ -78,6 +91,17 @@ import JobDetail from '@/pages/JobPage/JobDetail.vue';
 import * as constant from '@/types/constant';
 
 const { t } = useI18n();
+
+const param = ref({
+  appName: ''
+});
+
+const defaultApp = {
+  value: '',
+  label: ''
+};
+
+const appList = ref([defaultApp]);
 
 const defaultModel = {
   id: 0,
@@ -131,6 +155,8 @@ const rowKey = function (rowData) {
 
 const queryPage = function (pageNo) {
   return jobApi.getJobTaskHistoryList({
+    namespace: namespaceStore.current.value.namespaceId,
+    appName: param.value.appName,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -204,8 +230,31 @@ const showJobDetail = function (jobId) {
 
 const columns = createJobTaskColumns({ showJobDetail });
 
+const initAppList = function () {
+  appApi
+    .getAppList({
+      namespace: namespaceStore.current.value.namespaceId
+    })
+    .then(handleApiResult)
+    .then((page) => {
+      let options = [];
+      for (var item of page.list) {
+        options.push({
+          value: item.appName,
+          label: item.label || item.appName
+        });
+      }
+      if (options.length == 0) {
+        options.push(defaultApp);
+      }
+      appList.value = options;
+    })
+    .catch(printApiError);
+};
+
 onMounted(() => {
   namespaceStore.initLoad();
+  setTimeout(() => initAppList(), 100);
   queryList();
 });
 </script>
@@ -251,6 +300,10 @@ onMounted(() => {
 
 .header-button {
   flex: 0 0 auto;
+}
+
+.app-name {
+  width: 260px;
 }
 
 .namespace {

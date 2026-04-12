@@ -244,6 +244,8 @@ const message = {
   task: {
     taskId: 'TaskID',
     jobId: 'JobID',
+    namespace: 'Namespace',
+    appName: 'App Name',
     triggerTime: 'TriggerTime',
     instanceAddr: 'InstanceAddr',
     triggerMessage: 'TriggerMessage',

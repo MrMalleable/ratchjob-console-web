@@ -238,6 +238,8 @@ const message = {
   task: {
     taskId: '任务实例ID',
     jobId: '任务ID',
+    namespace: '命名空间',
+    appName: '应用名称',
     triggerTime: '触发时间',
     instanceAddr: '实例地址',
     triggerMessage: '触发消息',

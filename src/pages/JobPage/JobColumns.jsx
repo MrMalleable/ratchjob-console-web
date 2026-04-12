@@ -203,6 +203,16 @@ export const createJobTaskColumns = function ({ showJobDetail }) {
       width: 80
     },
     {
+      title: t('task.namespace'),
+      key: 'namespace',
+      width: 150
+    },
+    {
+      title: t('task.appName'),
+      key: 'appName',
+      width: 150
+    },
+    {
       title: t('task.jobId'),
       key: '_jobId',
       width: 80,
