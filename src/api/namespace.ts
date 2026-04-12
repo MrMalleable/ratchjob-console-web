@@ -8,13 +8,13 @@ class NamespaceApi {
   queryList(): Promise<AxiosResponse<IApiResult<Array<INamespace>>>> {
     return axios.request({
       method: 'get',
-      url: '/ratchjob/api/console/v1/namespaces/list'
+      url: '/ratchjob/api/console/v1/namespace/list'
     });
   }
   add(namespace: INamespace): Promise<AxiosResponse<IApiResult<any>>> {
     return axios.requestJSON({
       method: 'post',
-      url: '/ratchjob/api/console/v1/namespaces/add',
+      url: '/ratchjob/api/console/v1/namespace/create',
       data: {
         ...namespace
       }
@@ -23,7 +23,7 @@ class NamespaceApi {
   update(namespace: INamespace): Promise<AxiosResponse<IApiResult<any>>> {
     return axios.requestJSON({
       method: 'post',
-      url: '/ratchjob/api/console/v1/namespaces/update',
+      url: '/ratchjob/api/console/v1/namespace/update',
       data: {
         ...namespace
       }
@@ -32,7 +32,7 @@ class NamespaceApi {
   delete(namespace: INamespace): Promise<AxiosResponse<IApiResult<any>>> {
     return axios.requestJSON({
       method: 'post',
-      url: '/ratchjob/api/console/v1/namespaces/remove',
+      url: '/ratchjob/api/console/v1/namespace/remove',
       data: {
         namespaceId: namespace.namespaceId
       }
