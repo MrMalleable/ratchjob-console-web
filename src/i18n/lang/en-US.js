@@ -97,6 +97,7 @@ const message = {
     task_latest_list: 'LatestTaskList',
     system_management: 'System',
     user_management: 'User list',
+    namespace_management: 'Namespace Management',
     system_monitor: 'Monitor',
     cluster_info: 'Cluster Info',
     about: 'About'

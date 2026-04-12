@@ -98,6 +98,7 @@ const message = {
     task_latest_list: '最近任务执行记录',
     system_management: '系统管理',
     user_management: '用户管理',
+    namespace_management: '命名空间管理',
     system_monitor: '系统监控',
     cluster_info: '集群信息',
     about: '关于'
