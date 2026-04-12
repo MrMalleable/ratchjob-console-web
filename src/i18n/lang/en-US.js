@@ -183,8 +183,10 @@ const message = {
     scheduleType: 'schedule type',
     scheduleParam: 'schedule param',
     cronValue: 'cron value',
-    delaySecond: 'delay second',
-    intervalSecond: 'interval second',
+    delaySecond:
+      'relative delay seconds (relative to the last task completion time)',
+    intervalSecond:
+      'fixed interval seconds (fixed interval between two trigger times)',
     runMode: 'run mode',
     handleName: 'handle name',
     triggerParam: 'trigger param',
