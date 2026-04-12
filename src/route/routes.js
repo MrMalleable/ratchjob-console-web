@@ -12,6 +12,8 @@ import { AppsSharp, List, HomeSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 import ClusterPage from '@/pages/ClusterPage/ClusterPage.vue';
 import Login from '@/pages/Login.vue';
+const NamespaceListPage = () =>
+  import('@/pages/NamespacePage/NamespaceListPage.vue');
 
 export const routes = [
   {
@@ -91,6 +93,12 @@ export const routes = [
         component: UserListPage
       },
       {
+        path: '/manage/namespace',
+        name: 'manage namespace',
+        meta: { title: t('menu.namespace_management') },
+        component: NamespaceListPage
+      },
+      {
         path: '/manage/appmonitor',
         name: 'monitor',
         meta: { title: t('menu.system_monitor') },
@@ -148,6 +156,10 @@ export const sideAllMenu = [
       {
         name: t('menu.user_management'),
         path: '/manage/user'
+      },
+      {
+        name: t('menu.namespace_management'),
+        path: '/manage/namespace'
       },
       {
         name: t('menu.cluster_info'),
