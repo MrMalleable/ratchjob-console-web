@@ -28,7 +28,7 @@ export const createColumns = function ({ showUpdate, remove, webResources }) {
       key: 'type',
       fixed: 'right',
       render(row) {
-        if (!row.namespaceId) {
+        if (row.namespaceId === 'xxl') {
           return (
             <NTag type="info" size="small">
               {t('namespace.retain_space')}
