@@ -179,7 +179,7 @@ const showCreate = function () {
 const showUpdate = function (row) {
   appApi
     .getAppInfo({
-      namespace: row.namespaceId,
+      namespace: row.namespace,
       appName: row.appName
     })
     .then(handleApiResult)
@@ -196,7 +196,7 @@ const showUpdate = function (row) {
 const remove = function (row) {
   appApi
     .removeApp({
-      namespace: row.namespaceId,
+      namespace: row.namespace,
       appName: row.appName
     })
     .then(handleApiResult)
@@ -209,7 +209,7 @@ const remove = function (row) {
 const showDetail = function (row) {
   appApi
     .getAppInfo({
-      namespace: row.namespaceId,
+      namespace: row.namespace,
       appName: row.appName
     })
     .then(handleApiResult)
@@ -237,8 +237,7 @@ const submitForm = function () {
     instanceAddrs = modelRef.value.instanceAddrs;
   }
   let param = {
-    namespace:
-      modelRef.value.namespace || namespaceStore.current.value.namespaceId,
+    namespace: namespaceStore.current.value.namespaceId,
     appName: modelRef.value.appName,
     label: modelRef.value.label,
     registerType: modelRef.value.registerType,

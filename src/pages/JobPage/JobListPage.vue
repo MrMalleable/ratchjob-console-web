@@ -293,7 +293,7 @@ const remove = function (row) {
 const showTrigger = function (row) {
   appApi
     .getAppInfo({
-      namespace: row.namespaceId,
+      namespace: row.namespace,
       appName: row.appName
     })
     .then(handleApiResult)
