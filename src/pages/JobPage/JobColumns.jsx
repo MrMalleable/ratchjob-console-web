@@ -331,7 +331,8 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
     {
       title: t('task.callbackMessage'),
       key: 'callbackMessage',
-      width: 200,
+      width: 220,
+      fixed: 'right',
       render(row) {
         return renderMessageCell(row.callbackMessage);
       }
