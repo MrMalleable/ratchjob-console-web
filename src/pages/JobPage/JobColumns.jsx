@@ -194,7 +194,7 @@ export const createColumns = function ({
   return columns;
 };
 
-export const createJobTaskColumns = function ({ showJobDetail }) {
+export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
   const { t } = useI18n();
   const columns = [
     {
@@ -299,6 +299,29 @@ export const createJobTaskColumns = function ({ showJobDetail }) {
       title: t('task.callbackMessage'),
       key: 'callbackMessage',
       width: 200
+    },
+    {
+      title: t('common.operation'),
+      key: 'operation',
+      fixed: 'right',
+      width: 90,
+      render(row) {
+        const retryLogs = Array.isArray(row.tryLogs) ? row.tryLogs : [];
+        const hasLogAddress =
+          Boolean(row.instanceAddr) ||
+          retryLogs.some((item) => Boolean(item.addr));
+        return (
+          <NButton
+            size="tiny"
+            quaternary
+            type="info"
+            disabled={!hasLogAddress || showTaskLog === undefined}
+            onClick={() => showTaskLog?.(row)}
+          >
+            {t('task.executionLog')}
+          </NButton>
+        );
+      }
     }
   ];
   return columns;

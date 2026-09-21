@@ -70,6 +70,7 @@
         </template>
       </n-drawer-content>
     </n-drawer>
+    <JobTaskLogDrawer ref="taskLogDrawerRef" />
   </div>
 </template>
 
@@ -81,13 +82,9 @@ import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { namespaceStore } from '@/data/namespace';
 import { jobApi } from '@/api/job';
 import { appApi } from '@/api/app';
-import {
-  handleApiResult,
-  printApiSuccess,
-  printApiError
-} from '@/utils/request';
-import SubContentPage from '@/components/common/SubContentPage.jsx';
+import { handleApiResult, printApiError } from '@/utils/request';
 import JobDetail from '@/pages/JobPage/JobDetail.vue';
+import JobTaskLogDrawer from '@/pages/JobPage/JobTaskLogDrawer.vue';
 import * as constant from '@/types/constant';
 
 const { t } = useI18n();
@@ -131,6 +128,8 @@ const useForm = ref(false);
 const loadingRef = ref(false);
 
 const dataRef = ref([]);
+
+const taskLogDrawerRef = ref(null);
 
 const pagination = reactive({
   page: 1,
@@ -228,7 +227,11 @@ const showJobDetail = function (jobId) {
     .catch(printApiError);
 };
 
-const columns = createJobTaskColumns({ showJobDetail });
+const showTaskLog = function (task) {
+  taskLogDrawerRef.value?.open(task);
+};
+
+const columns = createJobTaskColumns({ showJobDetail, showTaskLog });
 
 const initAppList = function () {
   appApi
