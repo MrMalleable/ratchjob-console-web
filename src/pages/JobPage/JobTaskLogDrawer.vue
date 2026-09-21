@@ -67,6 +67,7 @@ const logContent = ref('');
 const fromLineNum = ref(1);
 const isEnd = ref(false);
 const selectedAttempt = ref(0);
+const attemptCount = ref(1);
 const taskInfo = ref(null);
 const taskStatus = ref('');
 const instanceAddr = ref('');
@@ -83,10 +84,11 @@ const attemptOptions = computed(() => {
   const retryLogs = Array.isArray(taskInfo.value?.tryLogs)
     ? taskInfo.value.tryLogs
     : [];
-  return Array.from({ length: retryLogs.length + 1 }, (_, index) => ({
+  const count = Math.max(attemptCount.value, retryLogs.length + 1, 1);
+  return Array.from({ length: count }, (_, index) => ({
     value: index,
     label: t('task.attemptNumber', { number: index + 1 }),
-    disabled: index === retryLogs.length && !taskInfo.value?.instanceAddr
+    disabled: index === count - 1 && !taskInfo.value?.instanceAddr
   }));
 });
 
@@ -119,7 +121,9 @@ const normalizeLogContent = (content) =>
   content.replace(/<br\s*\/?\s*>/gi, '\n');
 
 const loadLog = async (reset) => {
-  if (!visible.value || loading.value || !taskInfo.value) return;
+  if (!visible.value || !taskInfo.value) return;
+  // 增量刷新在加载中可跳过；重置/切换 attempt 必须打断并重新拉取
+  if (loading.value && !reset) return;
   if (reset) {
     logContent.value = '';
     fromLineNum.value = 1;
@@ -128,12 +132,13 @@ const loadLog = async (reset) => {
   clearTimer();
   loading.value = true;
   const version = ++requestVersion;
+  const requestAttempt = selectedAttempt.value;
   try {
     const response = await jobApi.getJobTaskLog({
       jobId: taskInfo.value.jobId,
       taskId: taskInfo.value.taskId,
       fromLineNum: fromLineNum.value,
-      attempt: selectedAttempt.value
+      attempt: requestAttempt
     });
     const result = handleApiResult(response);
     if (!result || version !== requestVersion || !visible.value) return;
@@ -148,9 +153,27 @@ const loadLog = async (reset) => {
     }
     taskStatus.value = result.taskStatus;
     instanceAddr.value = result.instanceAddr;
+    if (typeof result.attemptCount === 'number' && result.attemptCount > 0) {
+      attemptCount.value = result.attemptCount;
+      if (selectedAttempt.value >= result.attemptCount) {
+        selectedAttempt.value = result.attemptCount - 1;
+      }
+      // 当前（最后一次）attempt 的地址回写到任务元数据，供下拉禁用判断
+      if (
+        result.attempt === result.attemptCount - 1 &&
+        taskInfo.value &&
+        result.instanceAddr
+      ) {
+        taskInfo.value = {
+          ...taskInfo.value,
+          instanceAddr: result.instanceAddr
+        };
+      }
+    }
     isEnd.value = result.isEnd;
     if (isEnd.value) autoRefresh.value = false;
   } catch (error) {
+    if (version !== requestVersion) return;
     printApiError(error);
     autoRefresh.value = false;
   } finally {
@@ -175,6 +198,7 @@ const open = (task) => {
   taskStatus.value = task.status;
   instanceAddr.value = task.instanceAddr || '';
   const retryLogCount = Array.isArray(task.tryLogs) ? task.tryLogs.length : 0;
+  attemptCount.value = retryLogCount + 1;
   selectedAttempt.value = task.instanceAddr
     ? retryLogCount
     : Math.max(0, retryLogCount - 1);
@@ -193,6 +217,7 @@ const resetState = () => {
   taskInfo.value = null;
   logContent.value = '';
   fromLineNum.value = 1;
+  attemptCount.value = 1;
 };
 
 watch(visible, (show) => {

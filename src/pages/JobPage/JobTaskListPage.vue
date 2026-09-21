@@ -41,7 +41,7 @@
         <n-data-table
           remote
           ref="table"
-          :scroll-x="600"
+          :scroll-x="1820"
           :bordered="false"
           :columns="columns"
           :data="dataRef"
