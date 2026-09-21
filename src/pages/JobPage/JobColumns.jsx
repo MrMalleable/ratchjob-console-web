@@ -1,4 +1,4 @@
-import { NButton, NPopconfirm, NTag } from 'naive-ui';
+import { NButton, NPopconfirm, NTag, NTooltip } from 'naive-ui';
 import { h } from 'vue';
 import { useI18n } from 'vue-i18n';
 import template from 'template_js';
@@ -196,6 +196,36 @@ export const createColumns = function ({
 
 export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
   const { t } = useI18n();
+  const renderMessageCell = function (value) {
+    if (!value) {
+      return <span></span>;
+    }
+    const triggerSlot = {
+      trigger: () => (
+        <span
+          style={{
+            display: 'block',
+            maxWidth: '180px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          {value}
+        </span>
+      )
+    };
+    return (
+      <NTooltip
+        placement="top-start"
+        trigger="hover"
+        width={500}
+        v-slots={triggerSlot}
+      >
+        {value}
+      </NTooltip>
+    );
+  };
   const columns = [
     {
       title: t('task.taskId'),
@@ -293,12 +323,18 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
     {
       title: t('task.triggerMessage'),
       key: 'triggerMessage',
-      width: 200
+      width: 200,
+      render(row) {
+        return renderMessageCell(row.triggerMessage);
+      }
     },
     {
       title: t('task.callbackMessage'),
       key: 'callbackMessage',
-      width: 200
+      width: 200,
+      render(row) {
+        return renderMessageCell(row.callbackMessage);
+      }
     },
     {
       title: t('common.operation'),
