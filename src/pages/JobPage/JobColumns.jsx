@@ -284,7 +284,9 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
     {
       title: t('task.status'),
       key: 'status',
-      width: 100,
+      width: 120,
+      minWidth: 120,
+      ellipsis: false,
       render(row) {
         var value = row.status;
         let tagType = 'info';
@@ -323,7 +325,7 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
     {
       title: t('task.triggerMessage'),
       key: 'triggerMessage',
-      width: 200,
+      width: 220,
       render(row) {
         return renderMessageCell(row.triggerMessage);
       }
@@ -332,7 +334,6 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
       title: t('task.callbackMessage'),
       key: 'callbackMessage',
       width: 220,
-      fixed: 'right',
       render(row) {
         return renderMessageCell(row.callbackMessage);
       }
@@ -341,7 +342,7 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
       title: t('common.operation'),
       key: 'operation',
       fixed: 'right',
-      width: 90,
+      width: 100,
       render(row) {
         const retryLogs = Array.isArray(row.tryLogs) ? row.tryLogs : [];
         const hasLogAddress =
